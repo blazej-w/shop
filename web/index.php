@@ -19,10 +19,21 @@ if (isset($_SESSION['userId'])) {
     <body>
         <div>
             <?php if(is_null($user)): ?>
+            <h1>Zaloguj</h1>
             <form method="POST" action="login.php">
-                <input type="email" name="email">
-                <input type="password" name="password">
-                <input type="submit" value="Login">
+                <p><label>E-mail<input type="email" name="email"></label></p>
+                <p><label>Password<input type="password" name="password"></label></p>
+                <p><input type="submit" value="Login"></p>
+            </form>
+            
+            <h1>Zarejestruj</h1>
+            <form method="POST" action="register.php">
+                <p><label>E-mail<input type="email" name="email"></label></p>
+                <p><label>First Name<input type="text" name="firstName"></label></p>
+                <p><label>Last Name<input type="text" name="lastName"></label></p>
+                <p><label>Address<input type="text" name="address"></label></p>
+                <p><label>Password<input type="password" name="password"></label></p>
+                <p><input type="submit" value="Register">
             </form>
             <?php else: ?>
             <p>

@@ -1,5 +1,7 @@
 <?php
 
+require_once 'connection.php';
+
 class User
 {
     private $id;
@@ -66,7 +68,7 @@ class User
 
     public function setPasswordHash($password)
     {
-        $this->password = $password;
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
 
     public function setAddress($address)
@@ -137,5 +139,24 @@ class User
         $user->setAddress($userArray['address']);
 
         return $user;
+    }
+    
+    static public function createNewUser($userRegData, mysqli $conn)
+    {
+        $user = new User();
+        
+        $user->setPasswordHash($userRegData['password']);
+        
+        $passwordHash = $user->getPassword();        
+        
+        $query = "INSERT INTO user (`email`, `password`, `first_name`, `last_name`, `address`) VALUES ('" . $userRegData['email'] . "', '" . $passwordHash . "', '" . $userRegData['firstName'] . "', '" . $userRegData['lastName'] . "', '" . $userRegData['address'] . "')";
+
+        $result = $conn->query($query);
+        
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
